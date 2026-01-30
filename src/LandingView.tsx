@@ -1,3 +1,7 @@
+import React from 'react';
+
+const REGULATIONS_URL = "https://storage.yandexcloud.net/storagevideo/%D0%BF%D0%BE%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B1%D0%B5%D0%B7_%D0%BA%D0%B5%D0%B9%D1%81%D0%BE%D0%B2.pdf";
+
 interface LandingViewProps {
   onStart: () => void;
 }
@@ -8,10 +12,10 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
       onClick={onStart}
       className="
         relative z-0 mx-4 cursor-pointer 
-        w-full max-w-3xl          /* <-- СУЗИЛИ (было max-w-5xl) */
+        w-full max-w-3xl 
         rounded-[40px] 
         border border-white/30 bg-white/0 
-        p-8 md:p-12               /* <-- УМЕНЬШИЛИ ОТСТУПЫ */
+        p-8 md:p-12 
         text-center shadow-2xl 
         backdrop-blur-[10px] backdrop-saturate-150 
         transition-all duration-500 ease-out 
@@ -20,6 +24,9 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
     >
       <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/20 blur-3xl overflow-hidden" />
       
+      {/* pointer-events-none стоит на родителе, чтобы тексты не мешали кликать по карточке.
+         Для ссылки мы вернем pointer-events-auto.
+      */}
       <div className="relative z-10 flex flex-col items-center pointer-events-none">
         <span className="mb-4 text-sm font-bold tracking-[0.25em] text-black uppercase md:text-base">
           Itupolev
@@ -36,6 +43,25 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
         <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-black/60 animate-pulse">
           Нажмите, чтобы подать заявку
         </p>
+
+        {/* --- ССЫЛКА НА ПОЛОЖЕНИЕ --- */}
+        <a 
+          href={REGULATIONS_URL}
+          target="_blank" 
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()} // ОСТАНАВЛИВАЕМ всплытие клика, чтобы не открылась форма
+          className="
+            pointer-events-auto  /* Включаем клики для этого элемента */
+            mt-10                /* Отступ сверху */
+            border-b border-black/20 
+            pb-0.5 
+            text-[10px] font-bold uppercase tracking-widest text-black/40 
+            transition-colors hover:border-black hover:text-black
+          "
+        >
+          Положение о хакатоне
+        </a>
+
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
 
+const CONSENT_URL = "https://storage.yandexcloud.net/storagevideo/tic2026_%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D1%83_%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85.pdf"; 
+
 interface RegistrationFormProps {
   onClose: () => void;
 }
@@ -21,7 +23,7 @@ const STYLES = {
   input: "w-full rounded-xl border border-white/40 bg-white/20 px-3 py-2 text-sm font-bold text-black placeholder-black/50 outline-none transition-all focus:bg-white/50 focus:border-black/20 focus:ring-2 focus:ring-black/10",
   label: "ml-2 mb-0.5 block text-[10px] font-extrabold uppercase tracking-wider text-black/60", 
   checkboxWrapper: "flex cursor-pointer items-center justify-between rounded-xl border border-white/30 bg-white/20 p-2.5 transition-colors hover:bg-white/40",
-  button: "mt-1 w-full rounded-xl bg-black py-3 text-base font-bold uppercase text-white shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] hover:bg-gray-900",
+  button: "mt-1 w-full rounded-xl bg-black py-3 text-base font-bold uppercase text-white shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] hover:bg-gray-900 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed",
 };
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
@@ -38,6 +40,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
     phoneNumber: ""
   });
 
+  const [isAgreed, setIsAgreed] = useState(false);
+
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +56,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
+    if (!isAgreed) return;
+
     setIsLoading(true);
     setErrorMessage('');
 
@@ -138,12 +145,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
             <input name="name" type="text" placeholder="Иван" value={formData.name} onChange={handleChange} className={STYLES.input} required disabled={isLoading} />
           </div>
           <div>
-            <label className={STYLES.label}>Отчество</label>
-            <input name="patronymic" type="text" placeholder="Иванович" value={formData.patronymic} onChange={handleChange} className={STYLES.input} disabled={isLoading} />
-          </div>
-          <div>
             <label className={STYLES.label}>Фамилия</label>
             <input name="surname" type="text" placeholder="Иванов" value={formData.surname} onChange={handleChange} className={STYLES.input} required disabled={isLoading} />
+          </div>
+          <div>
+            <label className={STYLES.label}>Отчество</label>
+            <input name="patronymic" type="text" placeholder="Иванович" value={formData.patronymic} onChange={handleChange} className={STYLES.input} disabled={isLoading} />
           </div>
         </div>
 
@@ -166,7 +173,37 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
           <div className={`transition-all duration-300 ${formData.searchingCommand ? 'opacity-40 grayscale' : 'opacity-100'}`}><label className={STYLES.label}>Название команды {formData.searchingCommand && "(не требуется)"}</label><input name="teamName" type="text" placeholder={formData.searchingCommand ? "..." : "RocketTeam"} value={formData.teamName} onChange={handleChange} disabled={formData.searchingCommand || isLoading} className={STYLES.input} /></div>
         </div>
 
-        <button type="submit" disabled={isLoading} className={`${STYLES.button} ${isLoading ? 'opacity-70 cursor-wait' : ''}`}>{isLoading ? 'Отправка...' : 'Зарегистрироваться'}</button>
+        {/* --- ЧЕКБОКС СОГЛАСИЯ --- */}
+        <div className="mt-1 flex items-start gap-2.5 px-1">
+          <input 
+            id="consent-checkbox"
+            type="checkbox" 
+            checked={isAgreed} 
+            onChange={(e) => setIsAgreed(e.target.checked)}
+            disabled={isLoading}
+            className="mt-0.5 h-4 w-4 min-w-[16px] cursor-pointer accent-black" 
+          />
+          <label htmlFor="consent-checkbox" className="cursor-pointer text-xs font-bold leading-tight text-black/70">
+            Я даю согласие на{' '}
+            <a 
+              href={CONSENT_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="border-b border-black/40 text-black transition-colors hover:border-black"
+              onClick={(e) => e.stopPropagation()} // Чтобы клик по ссылке не переключал чекбокс (опционально)
+            >
+              обработку персональных данных
+            </a>
+          </label>
+        </div>
+
+        <button 
+          type="submit" 
+          disabled={isLoading || !isAgreed} 
+          className={STYLES.button}
+        >
+          {isLoading ? 'Отправка...' : 'Зарегистрироваться'}
+        </button>
       </form>
     </div>
   );
