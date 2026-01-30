@@ -7,7 +7,7 @@ interface RegistrationFormProps {
 interface RegistrationData {
   name: string;
   surname: string;
-  patronymic: string; // <-- Новое поле
+  patronymic: string;
   email: string;
   teamLead: boolean;
   searchingCommand: boolean;
@@ -28,7 +28,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
   const [formData, setFormData] = useState<RegistrationData>({
     name: "", 
     surname: "", 
-    patronymic: "", // <-- Инициализация
+    patronymic: "",
     email: "", 
     teamLead: false, 
     searchingCommand: false, 
@@ -83,7 +83,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
     }
   };
 
-  // 1. УСПЕХ
   if (status === 'success') {
     return (
       <div className="relative z-20 mx-4 w-full max-w-lg rounded-[30px] border border-white/30 bg-white/20 p-8 shadow-2xl backdrop-blur-[30px] backdrop-saturate-150 animate-in fade-in zoom-in duration-300">
@@ -101,7 +100,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
     );
   }
 
-  // 2. ОШИБКА
   if (status === 'error') {
     return (
       <div className="relative z-20 mx-4 w-full max-w-lg rounded-[30px] border border-white/30 bg-white/20 p-8 shadow-2xl backdrop-blur-[30px] backdrop-saturate-150 animate-in fade-in zoom-in duration-300">
@@ -125,7 +123,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
     );
   }
 
-  // 3. ФОРМА
   return (
     <div className="relative z-20 mx-4 w-full max-w-lg rounded-[30px] border border-white/30 bg-white/20 p-5 md:p-6 shadow-2xl backdrop-blur-[30px] backdrop-saturate-150 animate-in fade-in zoom-in duration-300 overflow-y-auto max-h-[80vh]">
       <div className="mb-3 flex items-center justify-between">
@@ -135,7 +132,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
         
-        {/* --- ИЗМЕНЕНИЕ: 3 колонки (Имя, Отчество, Фамилия) --- */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div>
             <label className={STYLES.label}>Имя</label>
@@ -143,7 +139,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
           </div>
           <div>
             <label className={STYLES.label}>Отчество</label>
-            {/* required убран */}
             <input name="patronymic" type="text" placeholder="Иванович" value={formData.patronymic} onChange={handleChange} className={STYLES.input} disabled={isLoading} />
           </div>
           <div>

@@ -14,10 +14,6 @@ const App: React.FC = () => {
     >
       <SponsorsHeader />
 
-      {/* АДАПТИВНЫЙ ОТСТУП СВЕРХУ (mt):
-         mt-32 (128px) на мобильных — т.к. логотипы в 2 ряда занимают место.
-         md:mt-40 (160px) на десктопе — чтобы красиво отделить от больших логотипов.
-      */}
       <div className="mt-32 md:mt-16 flex w-full justify-center px-4">
         {view === 'landing' ? (
           <LandingView onStart={() => setView('register')} />

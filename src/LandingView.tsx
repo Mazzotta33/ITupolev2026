@@ -25,7 +25,6 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
           Itupolev
         </span>
         
-        {/* Уменьшили гигантский шрифт заголовка */}
         <h1 className="mb-6 text-5xl font-black leading-[0.9] text-black uppercase md:text-7xl lg:text-8xl">
           Tupolev IT <br /> Challenge
         </h1>

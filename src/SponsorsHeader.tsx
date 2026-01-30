@@ -8,11 +8,12 @@ interface Sponsor {
 
 const SPONSORS_DATA: Sponsor[] = [
   { id: 1, name: 'Apex', logoUrl: '/apex.png' },
-  { id: 2, name: 'Baklazhan', logoUrl: '/baklazhan.png' },
+  { id: 2, name: 'Baklazhan', logoUrl: '/itpark.png' },
   { id: 3, name: 'Digital Kai', logoUrl: '/digital_kai.png' },
-  { id: 4, name: 'Parnas IT', logoUrl: '/parnas.png' },
-  { id: 5, name: 'SimbirSoft', logoUrl: '/simbir.png' },
-  { id: 6, name: 'Kai', logoUrl: '/kai.png' },
+  { id: 4, name: 'Parnas IT', logoUrl: '/kai.png' },
+  { id: 5, name: 'SimbirSoft', logoUrl: '/baklazhan.png' },
+  { id: 6, name: 'Kai', logoUrl: '/parnas.png' },
+  { id: 7, name: 'It Park', logoUrl: '/simbir.png' },
 ];
 
 const SponsorsHeader: React.FC = () => {
@@ -20,14 +21,9 @@ const SponsorsHeader: React.FC = () => {
     <header className="
       absolute top-0 left-0 z-10 
       w-full 
-      pointer-events-none 
       
-      /* --- АДАПТИВНАЯ СЕТКА --- */
-      /* Mobile: Grid (сетка), 3 колонки, отступы поменьше */
-      grid grid-cols-3 items-center justify-items-center gap-y-4 gap-x-2 px-4 py-6
-      
-      /* Desktop (md): Flex, растянутый по ширине, большие отступы */
-      md:flex md:justify-between md:px-16 md:py-8 md:gap-y-0
+      flex flex-wrap justify-center items-center gap-y-6 gap-x-8 px-4 py-6
+      md:flex-nowrap md:justify-between md:px-16 md:py-8 md:gap-y-0
     ">
       {SPONSORS_DATA.map((sponsor) => (
         <img 
@@ -37,14 +33,8 @@ const SponsorsHeader: React.FC = () => {
           className="
             pointer-events-auto 
             object-contain 
-            transition-opacity duration-300 opacity-80 hover:opacity-100
-            
-            /* --- РАЗМЕРЫ ЛОГОТИПОВ --- */
-            /* Mobile: высота 8 (32px), макс. ширина, чтобы не наезжали */
-            h-8 w-full max-w-[100px]
-            
-            /* Desktop: высота 20 (80px) или 24 (96px), авто ширина */
-            md:h-16 md:w-auto md:max-w-none
+            h-7 w-auto
+            md:h-12 lg:h-16 md:w-auto
           " 
         />
       ))}
