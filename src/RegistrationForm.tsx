@@ -79,7 +79,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onClose }) => {
     }));
   };
 
-  const handleTgKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleTgKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const input = e.currentTarget;
     if (
       (e.key === 'Backspace' && input.selectionStart === 1 && input.selectionEnd === 1) ||
