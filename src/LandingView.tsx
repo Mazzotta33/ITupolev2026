@@ -24,9 +24,6 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
     >
       <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/20 blur-3xl overflow-hidden" />
       
-      {/* pointer-events-none стоит на родителе, чтобы тексты не мешали кликать по карточке.
-         Для ссылки мы вернем pointer-events-auto.
-      */}
       <div className="relative z-10 flex flex-col items-center pointer-events-none">
         <span className="mb-4 text-sm font-bold tracking-[0.25em] text-black uppercase md:text-base">
           Itupolev
@@ -44,15 +41,14 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
           Нажмите, чтобы подать заявку
         </p>
 
-        {/* --- ССЫЛКА НА ПОЛОЖЕНИЕ --- */}
         <a 
           href={REGULATIONS_URL}
           target="_blank" 
           rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()} // ОСТАНАВЛИВАЕМ всплытие клика, чтобы не открылась форма
+          onClick={(e) => e.stopPropagation()} 
           className="
-            pointer-events-auto  /* Включаем клики для этого элемента */
-            mt-10                /* Отступ сверху */
+            pointer-events-auto
+            mt-10
             border-b border-black/20 
             pb-0.5 
             text-[10px] font-bold uppercase tracking-widest text-black/40 
@@ -61,7 +57,19 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
         >
           Положение о хакатоне
         </a>
+      </div>
 
+      <div className="
+        absolute bottom-6 right-8 md:bottom-8 md:right-10
+        text-right pointer-events-none
+        flex flex-col gap-0.5
+      ">
+        <p className="text-[10px] md:text-xs font-black uppercase tracking-tighter text-black">
+          21-24 февраля
+        </p>
+        <p className="text-[8px] md:text-[10px] font-bold uppercase tracking-tight text-black/50 leading-none">
+          IT-парк, ул. Петербургская, 52
+        </p>
       </div>
     </div>
   );
