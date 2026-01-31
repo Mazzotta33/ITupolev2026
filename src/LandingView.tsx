@@ -59,12 +59,6 @@ const LandingView: React.FC<LandingViewProps> = ({ onStart }) => {
         </a>
       </div>
 
-      {/* ИЗМЕНЕНИЯ ЗДЕСЬ:
-         1. Убрали absolute по умолчанию (теперь он relative/static на мобилке).
-         2. Добавили mt-8 (отступ сверху на мобилке).
-         3. flex-col items-center (центровка на мобилке).
-         4. Вернули absolute и позиционирование только для md: (десктоп).
-      */}
       <div className="
         mt-8 flex flex-col items-center pointer-events-none
         
